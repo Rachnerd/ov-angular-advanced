@@ -1,0 +1,9 @@
+<ng-container *ngIf="state$ | async as state">
+  <ov-cart-list
+    [products]="state.products"
+    [totalPrice]="state.totalPrice"
+    (increaseProduct)="increaseProduct($event)"
+    (decreaseProduct)="decreaseProduct($event)"
+    (removeProduct)="removeProduct($event)"
+  ></ov-cart-list>
+</ng-container>

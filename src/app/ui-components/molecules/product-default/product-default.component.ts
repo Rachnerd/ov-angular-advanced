@@ -20,7 +20,7 @@ export interface ProductDefault extends Product {
   cartInfo?: CartInfo;
 }
 
-interface CartInfo {
+export interface CartInfo {
   quantity: number;
   total: number;
 }

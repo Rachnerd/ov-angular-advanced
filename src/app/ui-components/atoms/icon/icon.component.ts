@@ -10,7 +10,9 @@ export type SupportedIcon =
   | 'star'
   | 'star-half-o'
   | 'star-o'
-  | 'envelope';
+  | 'envelope'
+  | 'plus'
+  | 'minus';
 
 export type SupportedColor =
   | 'primary'

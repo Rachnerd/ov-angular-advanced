@@ -1,0 +1,11 @@
+<ul>
+  <li *ngFor="let product of products; trackBy: trackById">
+    <ov-product-cart
+      [product]="product"
+      (decrease)="decrease(product.id, $event)"
+      (increase)="increase(product.id, $event)"
+      (remove)="remove(product.id)"
+    ></ov-product-cart>
+  </li>
+</ul>
+Total: <ov-price [amount]="totalPrice"></ov-price>

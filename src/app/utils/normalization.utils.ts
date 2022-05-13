@@ -53,3 +53,16 @@ export const emptySet = <T extends Identifier>(): Normalized<T> => ({
   byId: {},
   allIds: [],
 });
+
+export const addTo =
+  <T extends Identifier>({ byId, allIds }: Normalized<T>) =>
+  (item: T): Normalized<T> => {
+    const itemExists = byId[item.id] !== undefined;
+    return {
+      byId: {
+        ...byId,
+        [item.id]: item,
+      },
+      allIds: itemExists ? allIds : [...allIds, item.id],
+    };
+  };

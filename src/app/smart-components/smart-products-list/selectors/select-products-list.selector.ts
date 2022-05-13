@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { selectCartState } from '../../../state/cart/cart.selector';
 import { selectProductState } from '../../../state/product/product.selector';
 import { ApiProduct } from '../../../state/product/product.service';
 import { ProductDefault } from '../../../ui-components/molecules/product-default/product-default.component';
@@ -18,11 +19,25 @@ export type ProductsListState = AsyncState<ProductUnion[]>;
  */
 export const selectProductsList = createSelector(
   selectProductState,
-  (state) => ({
-    ...state,
+  selectCartState,
+  (productState, cartState): ProductsListState => ({
+    ...productState,
     data:
-      !state.loading && state.data
-        ? toArray(state.data).map(apiProductToProduct)
+      !productState.loading && productState.data
+        ? toArray(productState.data)
+            .map(apiProductToProduct)
+            .map((product) => {
+              const cartInfo = cartState.byId[product.id];
+              return {
+                ...product,
+                cartInfo: cartInfo
+                  ? {
+                      ...cartInfo,
+                      total: cartInfo.quantity * product.price,
+                    }
+                  : undefined,
+              };
+            })
         : [],
   })
 );

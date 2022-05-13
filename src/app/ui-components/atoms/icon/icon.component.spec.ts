@@ -57,6 +57,8 @@ describe('IconComponent', () => {
         'star-o': true,
         envelope: true,
         star: true,
+        minus: true,
+        plus: true,
       };
       expect(icons).toBeTruthy();
     });

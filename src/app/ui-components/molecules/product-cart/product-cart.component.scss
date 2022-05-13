@@ -1,0 +1,33 @@
+@import "../../_styles/breakpoint.scss";
+
+.product {
+  display: flex;
+  height: var(--product-height);
+  overflow: hidden;
+
+  padding: calc(var(--product-padding) * 0.5);
+
+  @include breakpoint-sm {
+    padding: var(--product-padding);
+  }
+}
+
+ov-thumbnail {
+  width: 86px;
+  height: 100%;
+}
+
+ov-icon {
+  cursor: pointer;
+}
+
+.info {
+  width: 100%;
+  padding-left: var(--space-xs);
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+}

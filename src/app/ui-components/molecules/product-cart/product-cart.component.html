@@ -1,0 +1,37 @@
+<section class="product">
+  <ov-thumbnail [src]="product.image" [alt]="product.title"></ov-thumbnail>
+  <div class="info">
+    <ov-title>{{ product.title }}</ov-title>
+    <ov-price [amount]="product.price"></ov-price>
+    <div class="actions">
+      <ov-button
+        (click)="decreaseAmount()"
+        type="inverted"
+        [disabled]="
+          quantityFormControl.value === product.quantity.min ||
+          !quantityFormControl.valid
+        "
+      >
+        <ov-icon icon="minus"></ov-icon>
+      </ov-button>
+      <input
+        [formControl]="quantityFormControl"
+        type="number"
+        [step]="product.quantity.step"
+      />
+
+      <ov-button
+        (click)="increaseAmount()"
+        type="inverted"
+        [disabled]="
+          quantityFormControl.value === product.quantity.max ||
+          !quantityFormControl.valid
+        "
+      >
+        <ov-icon icon="plus"></ov-icon>
+      </ov-button>
+    </div>
+    Total: <ov-price [amount]="product.cartInfo.total"></ov-price>
+    <ov-button (click)="remove.emit()">Delete</ov-button>
+  </div>
+</section>

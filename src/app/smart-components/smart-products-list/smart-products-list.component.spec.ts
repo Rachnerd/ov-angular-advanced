@@ -1,10 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MockComponents } from 'ng-mocks';
-import { MessageComponent } from '../../ui-components/atoms/message/message.component';
 import { SpinnerComponent } from '../../ui-components/atoms/spinner/spinner.component';
 import { ProductDefaultMock } from '../../ui-components/molecules/product-default/product-default.component.mocks';
-import { ProductMock } from '../../ui-components/molecules/product/product.component.mocks';
 import { ProductsListComponent } from '../../ui-components/organisms/products-list/products-list.component';
 import { testUtils, TestUtils } from '../../utils/test.utils';
 import { selectProductsList } from './selectors/select-products-list.selector';
@@ -64,6 +62,8 @@ describe('SmartProductsListComponent', () => {
     });
     fixture.detectChanges();
     const productsList = utils.component(ProductsListComponent);
-    expect(productsList.products).toEqual(PRODUCTS);
+    expect(productsList.products).toEqual(
+      PRODUCTS.map((product) => ({ ...product, cartInfo: undefined }))
+    );
   });
 });

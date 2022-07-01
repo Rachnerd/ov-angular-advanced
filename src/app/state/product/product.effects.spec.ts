@@ -13,7 +13,7 @@ import { ProductEffects } from './product.effects';
 import { ApiProductMock } from './product.mock';
 import { ApiProduct, ProductService } from './product.service';
 
-fdescribe('Product Effects', () => {
+describe('Product Effects', () => {
   let actions: Observable<any>;
   let effects: ProductEffects;
   let productServiceGetSpy: jasmine.Spy;
@@ -44,7 +44,7 @@ fdescribe('Product Effects', () => {
   });
 
   it('should dispatch a success action if the call succeeded', () => {
-    actions = hot('a', { a: getProducts({ limit: 6 }) });
+    actions = hot('a', { a: getProducts({ page: 1, size: 6 }) });
 
     productServiceGetSpy.and.returnValue(of(TEST_DATA));
 
@@ -55,7 +55,7 @@ fdescribe('Product Effects', () => {
   });
 
   it('should dispatch an error action if the call failed', () => {
-    actions = hot('a', { a: getProducts({ limit: 6 }) });
+    actions = hot('a', { a: getProducts({ page: 1, size: 6 }) });
 
     productServiceGetSpy.and.returnValue(
       throwError(() => Error('Something went wrong'))

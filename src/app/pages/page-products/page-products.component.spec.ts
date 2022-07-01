@@ -34,7 +34,7 @@ describe('PageProductsComponent', () => {
   it("should dispatch getProducts if the route hasn't already resolved products", () => {
     fixture.detectChanges();
     expect(store.scannedActions$).toBeObservable(
-      hot('a', { a: getProducts({ limit: 6 }) })
+      hot('a', { a: getProducts({ page: 1, size: 6 }) })
     );
   });
 

@@ -11,6 +11,6 @@ export class PageChildRoutesComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(getProducts({ limit: 6 }));
+    this.store.dispatch(getProducts({ page: 1, size: 6 }));
   }
 }

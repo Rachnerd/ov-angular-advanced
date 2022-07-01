@@ -13,7 +13,7 @@ export class PageProductsComponent implements OnInit {
   ngOnInit(): void {
     const { products } = this.route.snapshot.data;
     if (!products) {
-      this.store.dispatch(getProducts({ limit: 6 }));
+      this.store.dispatch(getProducts({ page: 1, size: 6 }));
     }
   }
 }

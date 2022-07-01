@@ -28,7 +28,9 @@ describe('ProductResolver', () => {
     spyOn(store, 'dispatch');
     resolver.resolve(ACTIVATED_ROUTE_SNAPSHOT, ROUTER_STATE_SNAPSHOT);
     expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith(getProducts({ limit: 6 }));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      getProducts({ page: 1, size: 6 })
+    );
   });
 
   it('should resolve if products are in the state', () => {

@@ -23,6 +23,7 @@ export const cartReducer = createReducer<CartState>(
     const product = byId[id];
     return {
       byId: {
+        ...byId,
         [id]: {
           ...product,
           quantity: product.quantity + step,
@@ -35,6 +36,7 @@ export const cartReducer = createReducer<CartState>(
     const product = byId[id];
     return {
       byId: {
+        ...byId,
         [id]: {
           ...product,
           quantity: product.quantity - step,

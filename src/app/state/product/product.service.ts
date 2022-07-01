@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
-import { ApiProductMock } from './product.mock';
+import { map, Observable } from 'rxjs';
 
 export interface ApiProduct {
   id: string;
@@ -25,31 +25,28 @@ export interface ApiQuantity {
 }
 
 interface GetProductsParams {
-  limit?: number;
+  page: number;
+  size: number;
 }
 
-const mockProductsArray = Object.keys(ApiProductMock).map(
-  (key) => ApiProductMock[key as keyof typeof ApiProductMock]
-);
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  constructor(private httpClient: HttpClient) {}
   /**
    * Fake API call
    * @param param0 GetProductsParams that represent values sent to the server.
    * @returns Observable ApiProduct[]
    */
-  get({ limit }: GetProductsParams): Observable<ApiProduct[]> {
-    let count = -1;
-    return of(
-      Array.from(
-        { length: limit ?? 10 },
-        () =>
-          mockProductsArray[
-            count === mockProductsArray.length - 1 ? (count = 0) : ++count
-          ]
+  get({ page, size }: GetProductsParams): Observable<ApiProduct[]> {
+    return this.httpClient
+      .get<{ results: ApiProduct[] }>(
+        `http://localhost:8080/products?page=${page}&size=${size}`
       )
-    ).pipe(delay(4000));
+      .pipe(
+        map(({ results }) => results)
+        // delay(3000)
+      );
   }
 }

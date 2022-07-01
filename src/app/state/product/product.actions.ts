@@ -8,7 +8,7 @@ export const saveProducts = createAction(
 
 export const getProducts = createAction(
   '[Products] Get',
-  props<{ limit: number }>()
+  props<{ page: number; size: number }>()
 );
 
 export const getProductsSuccess = createAction(

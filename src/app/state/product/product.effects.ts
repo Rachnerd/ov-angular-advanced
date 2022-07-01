@@ -9,8 +9,8 @@ export class ProductEffects {
   getProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.getProducts.type),
-      switchMap(({ limit }) =>
-        this.productService.get({ limit }).pipe(
+      switchMap(({ page, size }) =>
+        this.productService.get({ page, size }).pipe(
           switchMap((apiProducts) => [
             ProductActions.getProductsSuccess({ products: apiProducts }),
           ]),

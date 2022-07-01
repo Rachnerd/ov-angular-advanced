@@ -27,7 +27,7 @@ export class ProductResolver implements Resolve<ProductState> {
     _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot
   ): Observable<ProductState> {
-    this.store.dispatch(getProducts({ limit: 6 }));
+    this.store.dispatch(getProducts({ page: 1, size: 6 }));
     return this.store.select(selectProductState).pipe(
       filter(({ loading }) => !loading),
       take(1)

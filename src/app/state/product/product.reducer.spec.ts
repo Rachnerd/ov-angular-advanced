@@ -34,7 +34,7 @@ describe('Product Reducer', () => {
   });
 
   it('should start loading', () => {
-    store.dispatch(getProducts({ limit: 6 }));
+    store.dispatch(getProducts({ page: 1, size: 6 }));
     expect(store.select(selectProductState)).toBeObservable(
       cold('a', {
         a: {

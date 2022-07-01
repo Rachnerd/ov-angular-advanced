@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { selectProductState } from '../../../state/product/product.selector';
 import { ApiProduct } from '../../../state/product/product.service';
-import { ProductDefault } from '../../../ui-components/molecules/product-default/product-default.component';
+import { Product } from '../../../ui-components/molecules/product/product.component';
 import { ProductUnion } from '../../../ui-components/organisms/products-list/products-list.component';
 import { AsyncState } from '../../../utils/async-state.utils';
 import { toArray } from '../../../utils/normalization.utils';
@@ -34,15 +34,37 @@ export const selectProductsList = createSelector(
 const apiProductToProduct = ({
   category,
   ...apiProduct
-}: ApiProduct): ProductDefault => ({
-  ...apiProduct,
-  type: 'product',
-  /**
-   * Remap a key to fit the data shape of the UI.
-   */
-  subtitle: category,
-  /**
-   * Compute values immediately so they are not recalculated during render cycles.
-   */
-  isLimited: apiProduct.quantity.max / apiProduct.quantity.step < 6,
-});
+}: ApiProduct): ProductUnion => {
+  const product: Product = {
+    ...apiProduct,
+    /**
+     * Remap a key to fit the data shape of the UI.
+     */
+    subtitle: category,
+  };
+  if (apiProduct.quantity) {
+    return {
+      ...product,
+      type: 'product',
+      /**
+       * Compute values immediately so they are not recalculated during render cycles.
+       */
+      isLimited: apiProduct.quantity.max / apiProduct.quantity.step < 6,
+      quantity: apiProduct.quantity,
+    };
+  } else {
+    return apiProduct.replacement
+      ? {
+          ...product,
+          type: 'product-replaced',
+          replacement: {
+            ...apiProduct.replacement,
+            subtitle: apiProduct.replacement.category,
+          },
+        }
+      : {
+          ...product,
+          type: 'product-out-of-stock',
+        };
+  }
+};

@@ -9,7 +9,6 @@ import {
 } from './product.actions';
 import { ApiProductMock } from './product.mock';
 import { productReducer } from './product.reducer';
-import { selectProductState } from './product.selector';
 
 describe('Product Reducer', () => {
   let store: Store;
@@ -23,11 +22,11 @@ describe('Product Reducer', () => {
   });
 
   it('should initialize state', () => {
-    expect(store.select(selectProductState)).toBeObservable(
+    expect(store.select(({ product }: any) => product)).toBeObservable(
       cold('a', {
         a: {
+          data: { byId: {}, allIds: [] },
           loading: false,
-          data: emptySet(),
         },
       })
     );
@@ -35,7 +34,7 @@ describe('Product Reducer', () => {
 
   it('should start loading', () => {
     store.dispatch(getProducts({ page: 1, size: 6 }));
-    expect(store.select(selectProductState)).toBeObservable(
+    expect(store.select(({ product }: any) => product)).toBeObservable(
       cold('a', {
         a: {
           data: emptySet(),
@@ -56,7 +55,7 @@ describe('Product Reducer', () => {
         products: TEST_DATA,
       })
     );
-    expect(store.select(selectProductState)).toBeObservable(
+    expect(store.select(({ product }: any) => product)).toBeObservable(
       cold('a', {
         a: {
           data: {
@@ -95,7 +94,7 @@ describe('Product Reducer', () => {
       })
     );
 
-    expect(store.select(selectProductState)).toBeObservable(
+    expect(store.select(({ product }: any) => product)).toBeObservable(
       cold('a', {
         a: {
           data: {
@@ -117,7 +116,7 @@ describe('Product Reducer', () => {
 
   it('should set an error', () => {
     store.dispatch(getProductsError({ error: Error('error') }));
-    expect(store.select(selectProductState)).toBeObservable(
+    expect(store.select(({ product }: any) => product)).toBeObservable(
       cold('a', {
         a: {
           data: emptySet(),

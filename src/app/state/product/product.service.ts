@@ -10,7 +10,8 @@ export interface ApiProduct {
   category: string;
   image: string;
   rating: ApiRating;
-  quantity: ApiQuantity;
+  quantity?: ApiQuantity;
+  replacement?: ApiProduct;
 }
 
 export interface ApiRating {

@@ -25,6 +25,7 @@ export const selectCartList = createSelector(
       const product = productState.data?.byId[productCart.id]!;
       return {
         ...product,
+        quantity: product.quantity!,
         cartInfo: {
           quantity: productCart.quantity,
           total: productCart.quantity * product!.price,

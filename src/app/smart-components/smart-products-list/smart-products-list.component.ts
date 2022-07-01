@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { addToCart } from '../../state/cart/cart.actions';
-import { CartService } from '../../state/cart/cart.service';
 import { AddToCartEvent } from '../../ui-components/organisms/products-list/products-list.component';
 import {
   ProductsListState,

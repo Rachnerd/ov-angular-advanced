@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getProducts } from '../../state/product/product.actions';
+import { getCart, getFullCart } from '../../state/cart/cart.actions';
 
 @Component({
   selector: 'ov-page-child-routes',
@@ -12,5 +13,6 @@ export class PageChildRoutesComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(getProducts({ page: 1, size: 6 }));
+    this.store.dispatch(getFullCart());
   }
 }

@@ -20,22 +20,30 @@ export type ProductsListState = AsyncState<ProductUnion[]>;
 export const selectProductsList = createSelector(
   selectProductState,
   selectCartState,
-  (productState, cartState): ProductsListState => ({
+  (productState, cartState) => ({
     ...productState,
     data:
       !productState.loading && productState.data
         ? toArray(productState.data)
+            /**
+             * Map api product to client product
+             */
             .map(apiProductToProduct)
+            /**
+             * Merge cart info if applicable
+             */
             .map((product) => {
-              const cartInfo = cartState.byId[product.id];
+              if (
+                product.type === 'product-replaced' ||
+                product.type === 'product-out-of-stock' ||
+                cartState.data === undefined
+              ) {
+                return product;
+              }
+              const { byId } = cartState.data.productsNormalized;
               return {
                 ...product,
-                cartInfo: cartInfo
-                  ? {
-                      ...cartInfo,
-                      total: cartInfo.quantity * product.price,
-                    }
-                  : undefined,
+                cartInfo: byId[product.id],
               };
             })
         : [],

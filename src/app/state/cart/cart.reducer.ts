@@ -1,55 +1,48 @@
 import { createReducer, on } from '@ngrx/store';
-import { addTo, emptySet, Normalized } from '../../utils/normalization.utils';
+import { AsyncState } from '../../utils/async-state.utils';
 import {
-  addToCart,
-  decreaseQuantity,
-  increaseQuantity,
-  removeFromCart,
-} from './cart.actions';
+  emptySet,
+  mergeSets,
+  normalize,
+  Normalized,
+} from '../../utils/normalization.utils';
+import { Pagination } from '../../utils/pagination.utils';
+import * as CartActions from './cart.actions';
+import { CartProduct } from './cart.service';
 
-export interface CartProduct {
-  id: string;
-  quantity: number;
+interface NormalizedPaginatedCart {
+  productsNormalized: Normalized<CartProduct>;
+  productsPaginated?: Pagination<string>;
+  total: number;
 }
 
-export type CartState = Normalized<CartProduct>;
+export type CartState = AsyncState<NormalizedPaginatedCart>;
 
-const INITIAL_STATE: CartState = emptySet();
+const INITIAL_STATE: CartState = {
+  loading: false,
+};
 
 export const cartReducer = createReducer<CartState>(
   INITIAL_STATE,
-  on(addToCart, (state, { quantity, id }) => addTo(state)({ quantity, id })),
-  on(increaseQuantity, ({ byId, allIds }, { id, step }) => {
-    const product = byId[id];
-    return {
-      byId: {
-        ...byId,
-        [id]: {
-          ...product,
-          quantity: product.quantity + step,
-        },
-      },
-      allIds,
-    };
-  }),
-  on(decreaseQuantity, ({ byId, allIds }, { id, step }) => {
-    const product = byId[id];
-    return {
-      byId: {
-        ...byId,
-        [id]: {
-          ...product,
-          quantity: product.quantity - step,
-        },
-      },
-      allIds,
-    };
-  }),
-  on(removeFromCart, ({ byId, allIds }, { id }) => {
-    const { [id]: removedProduct, ...updatedById } = byId;
-    return {
-      byId: updatedById,
-      allIds: allIds.filter((id) => id !== removedProduct.id),
-    };
-  })
+  on(CartActions.getCartSuccess, (state, { cart }) => ({
+    loading: false,
+    data: {
+      productsNormalized: mergeSets(
+        state.data?.productsNormalized ?? emptySet(),
+        normalize(cart.products.results)
+      ),
+      productsPaginated:
+        cart.products.size !== CartActions.FULL_CART_SIZE
+          ? {
+              ...cart.products,
+              results: cart.products.results.map(({ id }) => id),
+            }
+          : undefined,
+      total: cart.total,
+    },
+  })),
+  on(CartActions.getCartError, (_, { error }) => ({
+    loading: false,
+    error,
+  }))
 );

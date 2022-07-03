@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Product } from '../../ui-components/molecules/product/product.component';
+import { Observable } from 'rxjs';
 import { Normalized } from '../../utils/normalization.utils';
+import { Pagination, PaginationParams } from '../../utils/pagination.utils';
 
 export interface CartProduct {
   id: string;
@@ -14,44 +15,34 @@ export interface Cart {
   products: Normalized<CartProduct>;
 }
 
-const EMPTY_CART: Cart = {
-  products: {
-    byId: {},
-    allIds: [],
-  },
-  total: 0,
-};
+export interface ApiCart {
+  total: number;
+  products: Normalized<CartProduct>;
+}
+
+export interface PaginatedCart {
+  products: Pagination<CartProduct>;
+  total: number;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  cart$: Observable<Cart>;
+  constructor(private httpClient: HttpClient) {}
 
-  private cartSubject = new BehaviorSubject<Cart>(EMPTY_CART);
-
-  constructor() {
-    this.cart$ = this.cartSubject.asObservable();
-  }
-
-  add(product: Product, quantity: number) {
-    const cartItem: CartProduct = {
-      id: product.id,
-      quantity,
-      total: quantity * product.price,
-    };
-
-    const cart = this.cartSubject.getValue();
-
-    this.cartSubject.next({
-      products: {
-        byId: {
-          ...cart.products.byId,
-          [cartItem.id]: cartItem,
-        },
-        allIds: [...cart.products.allIds, cartItem.id],
-      },
-      total: cart.total + cartItem.total,
-    });
+  /**
+   * Fake API call
+   * @param param0 GetProductsParams that represent values sent to the server.
+   * @returns Observable ApiProduct[]
+   */
+  get({ page, size }: PaginationParams): Observable<PaginatedCart> {
+    return this.httpClient
+      .get<PaginatedCart>(
+        `http://localhost:8080/cart?page=${page}&size=${size}`
+      )
+      .pipe
+      // delay(3000)
+      ();
   }
 }

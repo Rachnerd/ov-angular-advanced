@@ -75,8 +75,5 @@ export const mergeSets = <T extends Identifier>(
     ...a.byId,
     ...b.byId,
   },
-  allIds: {
-    ...a.allIds,
-    ...b.allIds.filter((id) => a.byId[id] === undefined),
-  },
+  allIds: [...a.allIds, ...b.allIds.filter((id) => a.byId[id] === undefined)],
 });

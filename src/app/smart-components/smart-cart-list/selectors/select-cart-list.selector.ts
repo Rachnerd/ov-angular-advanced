@@ -1,5 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { selectCartState } from '../../../state/cart/cart.selector';
+import { CartProduct } from '../../../state/cart/cart.service';
 import { selectProductState } from '../../../state/product/product.selector';
 import { ProductCart } from '../../../ui-components/molecules/product-cart/product-cart.component';
 import { toArray } from '../../../utils/normalization.utils';
@@ -21,23 +22,25 @@ export const selectCartList = createSelector(
   selectProductState,
   selectCartState,
   (productState, cartState): CartListState => {
-    const products = toArray(cartState).map((productCart) => {
-      const product = productState.data?.byId[productCart.id]!;
+    if (!cartState.data) {
+      return {
+        products: [],
+        totalPrice: 0,
+      };
+    }
+    const products = toArray<CartProduct>(
+      cartState.data.productsNormalized
+    ).map((cartProduct) => {
+      const product = productState.data?.byId[cartProduct.id]!;
       return {
         ...product,
         quantity: product.quantity!,
-        cartInfo: {
-          quantity: productCart.quantity,
-          total: productCart.quantity * product!.price,
-        },
+        cartInfo: cartProduct,
       };
     });
     return {
       products,
-      totalPrice: products.reduce(
-        (total, product) => total + product.cartInfo.total,
-        0
-      ),
+      totalPrice: cartState.data.total,
     };
   }
 );

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { PaginationParams } from '../../utils/pagination.utils';
 
 export interface ApiProduct {
   id: string;
@@ -25,11 +26,6 @@ export interface ApiQuantity {
   max: number;
 }
 
-interface GetProductsParams {
-  page: number;
-  size: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -40,7 +36,7 @@ export class ProductService {
    * @param param0 GetProductsParams that represent values sent to the server.
    * @returns Observable ApiProduct[]
    */
-  get({ page, size }: GetProductsParams): Observable<ApiProduct[]> {
+  get({ page, size }: PaginationParams): Observable<ApiProduct[]> {
     return this.httpClient
       .get<{ results: ApiProduct[] }>(
         `http://localhost:8080/products?page=${page}&size=${size}`

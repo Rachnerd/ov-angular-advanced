@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { selectCartState } from '../../../state/cart/cart.selector';
 import { selectProductState } from '../../../state/product/product.selector';
 import { ApiProduct } from '../../../state/product/product.service';
 import { Product } from '../../../ui-components/molecules/product/product.component';
@@ -18,11 +19,33 @@ export type ProductsListState = AsyncState<ProductUnion[]>;
  */
 export const selectProductsList = createSelector(
   selectProductState,
-  (state) => ({
-    ...state,
+  selectCartState,
+  (productState, cartState) => ({
+    ...productState,
     data:
-      !state.loading && state.data
-        ? toArray(state.data).map(apiProductToProduct)
+      !productState.loading && productState.data
+        ? toArray(productState.data)
+            /**
+             * Map api product to client product
+             */
+            .map(apiProductToProduct)
+            /**
+             * Merge cart info if applicable
+             */
+            .map((product) => {
+              if (
+                product.type === 'product-replaced' ||
+                product.type === 'product-out-of-stock' ||
+                cartState.data === undefined
+              ) {
+                return product;
+              }
+              const { byId } = cartState.data.productsNormalized;
+              return {
+                ...product,
+                cartInfo: byId[product.id],
+              };
+            })
         : [],
   })
 );

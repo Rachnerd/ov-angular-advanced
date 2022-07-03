@@ -62,8 +62,6 @@ describe('SmartProductsListComponent', () => {
     });
     fixture.detectChanges();
     const productsList = utils.component(ProductsListComponent);
-    expect(productsList.products).toEqual(
-      PRODUCTS.map((product) => ({ ...product, cartInfo: undefined }))
-    );
+    expect(productsList.products).toEqual(PRODUCTS);
   });
 });

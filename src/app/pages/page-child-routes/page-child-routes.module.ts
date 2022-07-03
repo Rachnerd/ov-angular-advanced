@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SmartProductsListComponent } from '../../smart-components/smart-products-list/smart-products-list.component';
 import { SmartProductsListModule } from '../../smart-components/smart-products-list/smart-products-list.module';
+import { CartStateModule } from '../../state/cart/cart.state.module';
 import { ProductStateModule } from '../../state/product/product.module';
 import { TemplateDefaultModule } from '../../ui-components/templates/template-default/template-default.module';
 import { PageChildRoutesComponent } from './page-child-routes.component';
@@ -41,6 +42,7 @@ import { SideComponent } from './side/side.component';
       },
     ]),
     ProductStateModule,
+    CartStateModule,
     TemplateDefaultModule,
     SmartProductsListModule,
   ],

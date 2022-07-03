@@ -53,3 +53,17 @@ export const emptySet = <T extends Identifier>(): Normalized<T> => ({
   byId: {},
   allIds: [],
 });
+
+export const mergeSets = <T extends Identifier>(
+  a: Normalized<T>,
+  b: Normalized<T>
+): Normalized<T> => ({
+  byId: {
+    ...a.byId,
+    ...b.byId,
+  },
+  allIds: {
+    ...a.allIds,
+    ...b.allIds.filter((id) => a.byId[id] === undefined),
+  },
+});

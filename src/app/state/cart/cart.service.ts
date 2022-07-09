@@ -31,20 +31,11 @@ export interface PaginatedCart {
 export class CartService {
   constructor(private httpClient: HttpClient) {}
 
-  /**
-   * Fake API call
-   * @param param0 GetProductsParams that represent values sent to the server.
-   * @returns Observable ApiProduct[]
-   */
   get(pagination?: PaginationParams): Observable<PaginatedCart> {
-    return this.httpClient
-      .get<PaginatedCart>(
-        `http://localhost:8080/cart${
-          pagination ? `?page=${pagination.page}&size=${pagination.size}` : ``
-        }`
-      )
-      .pipe
-      // delay(3000)
-      ();
+    return this.httpClient.get<PaginatedCart>(
+      `http://localhost:8080/cart${
+        pagination ? `?page=${pagination.page}&size=${pagination.size}` : ``
+      }`
+    );
   }
 }

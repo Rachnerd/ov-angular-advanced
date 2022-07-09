@@ -31,13 +31,10 @@ export const cartReducer = createReducer<CartState>(
         state.data?.productsNormalized ?? emptySet(),
         normalize(cart.products.results)
       ),
-      productsPaginated:
-        cart.products.size !== CartActions.FULL_CART_SIZE
-          ? {
-              ...cart.products,
-              results: cart.products.results.map(({ id }) => id),
-            }
-          : undefined,
+      productsPaginated: {
+        ...cart.products,
+        results: cart.products.results.map(({ id }) => id),
+      },
       total: cart.total,
     },
   })),

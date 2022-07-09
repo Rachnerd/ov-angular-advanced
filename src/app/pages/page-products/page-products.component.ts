@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { getFullCart } from '../../state/cart/cart.actions';
+import { getCart } from '../../state/cart/cart.actions';
 import { getProducts } from '../../state/product/product.actions';
 @Component({
   selector: 'ov-page-products',
@@ -16,6 +16,6 @@ export class PageProductsComponent implements OnInit {
     if (!products) {
       this.store.dispatch(getProducts({ page: 1, size: 6 }));
     }
-    this.store.dispatch(getFullCart());
+    this.store.dispatch(getCart({}));
   }
 }

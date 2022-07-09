@@ -36,10 +36,12 @@ export class CartService {
    * @param param0 GetProductsParams that represent values sent to the server.
    * @returns Observable ApiProduct[]
    */
-  get({ page, size }: PaginationParams): Observable<PaginatedCart> {
+  get(pagination?: PaginationParams): Observable<PaginatedCart> {
     return this.httpClient
       .get<PaginatedCart>(
-        `http://localhost:8080/cart?page=${page}&size=${size}`
+        `http://localhost:8080/cart${
+          pagination ? `?page=${pagination.page}&size=${pagination.size}` : ``
+        }`
       )
       .pipe
       // delay(3000)

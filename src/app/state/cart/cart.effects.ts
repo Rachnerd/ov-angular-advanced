@@ -7,18 +7,10 @@ import { CartService } from './cart.service';
 @Injectable()
 export class CartEffects {
   getCart$ = createEffect(() =>
-    merge(
-      this.actions$.pipe(ofType(CartActions.getCart.type)),
-      this.actions$.pipe(
-        ofType(CartActions.getFullCart.type),
-        map(() => ({
-          page: 1,
-          size: CartActions.FULL_CART_SIZE,
-        }))
-      )
-    ).pipe(
-      switchMap((payload) =>
-        this.cartService.get(payload).pipe(
+    this.actions$.pipe(
+      ofType<ReturnType<typeof CartActions.getCart>>(CartActions.getCart.type),
+      switchMap((action) =>
+        this.cartService.get(action.pagination).pipe(
           map((cart) => CartActions.getCartSuccess({ cart })),
           catchError((error) => of(CartActions.getCartError({ error })))
         )

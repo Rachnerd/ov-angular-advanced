@@ -38,4 +38,16 @@ export class CartService {
       }`
     );
   }
+
+  post(product: Pick<CartProduct, 'id' | 'quantity'>): Observable<void> {
+    return this.httpClient.post<void>(`http://localhost:8080/cart`, product);
+  }
+
+  update(cartProduct: Pick<CartProduct, 'id' | 'quantity'>): Observable<void> {
+    return this.httpClient.put<void>(`http://localhost:8080/cart`, cartProduct);
+  }
+
+  delete({ id }: Pick<CartProduct, 'id'>): Observable<void> {
+    return this.httpClient.delete<void>(`http://localhost:8080/cart/${id}`);
+  }
 }

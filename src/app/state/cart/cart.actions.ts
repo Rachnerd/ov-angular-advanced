@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { PaginatedCart } from './cart.service';
+import { CartProduct, PaginatedCart } from './cart.service';
 
 export const getCart = createAction(
   '[Cart] Get',
@@ -16,17 +16,47 @@ export const getCartError = createAction(
   props<{ error: Error }>()
 );
 
-export const increaseQuantity = createAction(
-  '[Cart] Increase',
-  props<{ id: string; step: number }>()
+export const addToCart = createAction(
+  '[Cart] Add to cart',
+  props<{ product: Pick<CartProduct, 'id' | 'quantity'> }>()
 );
 
-export const decreaseQuantity = createAction(
-  '[Cart] Decrease',
-  props<{ id: string; step: number }>()
+export const addToCartSuccess = createAction(
+  '[Cart] Add to cart Success',
+  props<{ product: Pick<CartProduct, 'id' | 'quantity'> }>()
 );
 
-export const removeFromCart = createAction(
-  '[Cart] Remove',
+export const addToCartError = createAction(
+  '[Cart] Add to cart Error',
+  props<{ error: Error }>()
+);
+
+export const updateQuantity = createAction(
+  '[Cart] Update quantity',
+  props<{ id: string; quantity: number }>()
+);
+
+export const updateQuantitySuccess = createAction(
+  '[Cart] Update quantity success',
+  props<{ id: string; quantity: number }>()
+);
+
+export const updateQuantityError = createAction(
+  '[Cart] Update quantity error',
+  props<{ error: Error }>()
+);
+
+export const deleteFromCart = createAction(
+  '[Cart] Delete from cart',
   props<{ id: string }>()
+);
+
+export const deleteFromCartSuccess = createAction(
+  '[Cart] Delete from cart success',
+  props<{ id: string }>()
+);
+
+export const deleteFromCartError = createAction(
+  '[Cart] Delete from cart error',
+  props<{ error: Error }>()
 );

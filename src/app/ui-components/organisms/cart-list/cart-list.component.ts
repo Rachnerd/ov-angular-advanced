@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductCart } from '../../molecules/product-cart/product-cart.component';
 
 export interface QuantityEvent {
-  step: number;
+  quantity: number;
   id: string;
 }
 
@@ -23,16 +23,16 @@ export class CartListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  increase(id: string, step: number) {
+  increase(id: string, quantity: number) {
     this.increaseProduct.emit({
-      step,
+      quantity,
       id,
     });
   }
 
-  decrease(id: string, step: number) {
+  decrease(id: string, quantity: number) {
     this.decreaseProduct.emit({
-      step,
+      quantity,
       id,
     });
   }

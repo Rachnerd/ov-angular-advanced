@@ -27,10 +27,7 @@ export const cartReducer = createReducer<CartState>(
   on(CartActions.getCartSuccess, (state, { cart }) => ({
     loading: false,
     data: {
-      productsNormalized: mergeSets(
-        state.data?.productsNormalized ?? emptySet(),
-        normalize(cart.products.results)
-      ),
+      productsNormalized: normalize(cart.products.results),
       productsPaginated: {
         ...cart.products,
         results: cart.products.results.map(({ id }) => id),

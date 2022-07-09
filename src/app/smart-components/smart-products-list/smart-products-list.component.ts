@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { addToCart } from '../../state/cart/cart.actions';
 import { AddToCartEvent } from '../../ui-components/organisms/products-list/products-list.component';
 import {
   ProductsListState,
@@ -22,6 +23,6 @@ export class SmartProductsListComponent implements OnInit {
   }
 
   addProductToCart({ product, quantity }: AddToCartEvent) {
-    // this.cartService.add(product, quantity);
+    this.store.dispatch(addToCart({ product: { id: product.id, quantity } }));
   }
 }

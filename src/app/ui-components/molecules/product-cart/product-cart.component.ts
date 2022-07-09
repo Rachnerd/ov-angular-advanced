@@ -26,37 +26,19 @@ type Step = number;
   templateUrl: './product-cart.component.html',
   styleUrls: ['./product-cart.component.scss'],
 })
-export class ProductCartComponent implements OnInit, OnChanges {
+export class ProductCartComponent {
   @Input() product!: ProductCart;
   @Output() increase = new EventEmitter<Step>();
   @Output() decrease = new EventEmitter<Step>();
   @Output() remove = new EventEmitter<void>();
 
-  quantityFormControl!: FormControl;
-
-  constructor() {}
-
-  ngOnChanges({ product }: SimpleChanges): void {
-    if (product && !product.firstChange) {
-      this.quantityFormControl.setValue(product.currentValue.cartInfo.quantity);
-    }
-  }
-
-  ngOnInit(): void {
-    this.quantityFormControl = new FormControl(this.product.cartInfo.quantity, [
-      Validators.required,
-      /**
-       * Custom validator to check if the quantity meets the step requirement.
-       */
-      QuantityValidator(this.product.quantity.step),
-    ]);
-  }
-
   decreaseAmount(): void {
-    this.decrease.emit(this.product.quantity.step);
+    const { quantity, cartInfo } = this.product;
+    this.decrease.emit(cartInfo.quantity - quantity.step);
   }
 
   increaseAmount(): void {
-    this.increase.emit(this.product.quantity.step);
+    const { quantity, cartInfo } = this.product;
+    this.increase.emit(cartInfo.quantity + quantity.step);
   }
 }

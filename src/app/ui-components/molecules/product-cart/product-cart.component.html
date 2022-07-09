@@ -7,31 +7,22 @@
       <ov-button
         (click)="decreaseAmount()"
         type="inverted"
-        [disabled]="
-          quantityFormControl.value === product.quantity.min ||
-          !quantityFormControl.valid
-        "
+        [disabled]="product.cartInfo.quantity <= product.quantity.step"
       >
         <ov-icon icon="minus"></ov-icon>
       </ov-button>
-      <input
-        [formControl]="quantityFormControl"
-        type="number"
-        [step]="product.quantity.step"
-      />
-
+      {{ product.cartInfo.quantity }}
       <ov-button
         (click)="increaseAmount()"
         type="inverted"
-        [disabled]="
-          quantityFormControl.value === product.quantity.max ||
-          !quantityFormControl.valid
-        "
+        [disabled]="product.cartInfo.quantity >= product.quantity.max"
       >
         <ov-icon icon="plus"></ov-icon>
       </ov-button>
     </div>
-    Total: <ov-price [amount]="product.cartInfo.total"></ov-price>
-    <ov-button (click)="remove.emit()">Delete</ov-button>
+    <div class="footer">
+      Total: <ov-price [amount]="product.cartInfo.total"></ov-price>
+      <ov-button (click)="remove.emit()">Delete</ov-button>
+    </div>
   </div>
 </section>

@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  decreaseQuantity,
-  increaseQuantity,
-  removeFromCart,
-} from '../../state/cart/cart.actions';
+import { deleteFromCart, updateQuantity } from '../../state/cart/cart.actions';
 import { QuantityEvent } from '../../ui-components/organisms/cart-list/cart-list.component';
 import {
   CartListState,
@@ -27,14 +23,14 @@ export class SmartCartListComponent implements OnInit {
   }
 
   increaseProduct(event: QuantityEvent) {
-    this.store.dispatch(increaseQuantity(event));
+    this.store.dispatch(updateQuantity(event));
   }
 
   decreaseProduct(event: QuantityEvent) {
-    this.store.dispatch(decreaseQuantity(event));
+    this.store.dispatch(updateQuantity(event));
   }
 
   removeProduct(id: string) {
-    this.store.dispatch(removeFromCart({ id }));
+    this.store.dispatch(deleteFromCart({ id }));
   }
 }

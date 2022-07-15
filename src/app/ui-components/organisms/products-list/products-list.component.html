@@ -2,8 +2,6 @@
   <li
     *ngFor="let product of products; trackBy: trackById"
     [ngSwitch]="product.type"
-    [ovIntersectionObserver]="productIntersectionMargin"
-    (intersect)="productIntersect($event)"
   >
     <ov-product-out-of-stock
       *ngSwitchCase="'product-out-of-stock'"

@@ -1,0 +1,15 @@
+{
+  "possibleTypes": {
+    "Product": [
+      "ProductInStock",
+      "ProductOutOfStock",
+      "ProductReplaced"
+    ],
+    "ProductResult": [
+      "NotFound",
+      "ProductInStock",
+      "ProductOutOfStock",
+      "ProductReplaced"
+    ]
+  }
+}

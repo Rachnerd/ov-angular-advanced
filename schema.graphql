@@ -1,0 +1,100 @@
+type Cart {
+  products: CartProducts!
+  total: Float!
+}
+
+type CartProduct {
+  id: ID!
+  quantity: Int!
+  total: Float!
+}
+
+type CartProducts {
+  cartProducts: [CartProduct!]!
+  paginationInfo: PaginationInfo!
+}
+
+type NotFound {
+  id: ID!
+  reason: String!
+}
+
+type PaginationInfo {
+  page: Int!
+  size: Int!
+  totalPages: Int!
+  totalResults: Int!
+}
+
+input PaginationParams {
+  page: Int!
+  size: Int!
+}
+
+interface Product {
+  category: String!
+  description: String!
+  id: ID!
+  image: String!
+  price: Float!
+  rating: Rating!
+  title: String!
+}
+
+type ProductInStock implements Product {
+  cartInfo: CartProduct
+  category: String!
+  description: String!
+  id: ID!
+  image: String!
+  limited: Boolean!
+  price: Float!
+  quantity: Quantity!
+  rating: Rating!
+  title: String!
+}
+
+type ProductOutOfStock implements Product {
+  category: String!
+  description: String!
+  id: ID!
+  image: String!
+  price: Float!
+  rating: Rating!
+  title: String!
+}
+
+type ProductReplaced implements Product {
+  category: String!
+  description: String!
+  id: ID!
+  image: String!
+  price: Float!
+  rating: Rating!
+  replacement: ProductInStock!
+  title: String!
+}
+
+union ProductResult = NotFound | ProductInStock | ProductOutOfStock | ProductReplaced
+
+type Products {
+  paginationInfo: PaginationInfo!
+  results: [Product!]!
+}
+
+type Quantity {
+  max: Int!
+  min: Int!
+  step: Int!
+}
+
+type Query {
+  cart(pagination: PaginationParams): Cart!
+  product(id: ID!): ProductReplaced!
+  products(pagination: PaginationParams!): Products!
+}
+
+type Rating {
+  count: Int!
+  rate: Float!
+}

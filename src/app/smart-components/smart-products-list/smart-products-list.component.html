@@ -1,4 +1,9 @@
-<ov-products-list
-  [products]="products"
-  (addToCart)="addProductToCart($event)"
-></ov-products-list>
+<ng-container *ngIf="products$ | async as state">
+  <ov-spinner *ngIf="state.loading; else content"></ov-spinner>
+  <ng-template #content>
+    <ov-products-list
+      [products]="state.data!"
+      (addToCart)="addProductToCart($event)"
+    ></ov-products-list>
+  </ng-template>
+</ng-container>

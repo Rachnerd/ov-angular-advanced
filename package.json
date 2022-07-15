@@ -10,7 +10,8 @@
     "docs": "compodoc -p ./tsconfig.json -s",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "npm run docs:json && ng run ov-angular-advanced:storybook",
-    "build-storybook": "npm run docs:json && ng run ov-angular-advanced:build-storybook"
+    "build-storybook": "npm run docs:json && ng run ov-angular-advanced:build-storybook",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "private": true,
   "dependencies": {
@@ -22,9 +23,12 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "apollo-angular": "^3.0.1",
+    "graphql": "^16.5.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "@apollo/client": "^3.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.3.0",
@@ -32,6 +36,12 @@
     "@angular/compiler-cli": "~13.3.0",
     "@babel/core": "^7.17.8",
     "@compodoc/compodoc": "^1.1.19",
+    "@graphql-codegen/cli": "2.8.1",
+    "@graphql-codegen/fragment-matcher": "^3.3.0",
+    "@graphql-codegen/introspection": "2.2.0",
+    "@graphql-codegen/typescript": "2.7.1",
+    "@graphql-codegen/typescript-apollo-angular": "3.5.1",
+    "@graphql-codegen/typescript-operations": "2.5.1",
     "@storybook/addon-a11y": "^6.5.9",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",

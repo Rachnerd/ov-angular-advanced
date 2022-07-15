@@ -1,0 +1,39 @@
+fragment ProductUnion on Product {
+  id
+  title
+  price
+  description
+  category
+  image
+  rating {
+    count
+    rate
+  }
+  ... on ProductInStock {
+    quantity {
+      min
+      step
+      max
+    }
+    limited
+    cartInfo {
+      id
+      quantity
+      total
+    }
+  }
+  ... on ProductReplaced {
+    replacement {
+      id
+      title
+    }
+  }
+}
+
+query ProductsList($page: Int!, $size: Int!) {
+  products(pagination: { page: $page, size: $size }) {
+    results {
+      ...ProductUnion
+    }
+  }
+}

@@ -80,10 +80,7 @@ const apiProductToProduct = ({
       ? {
           ...product,
           type: 'product-replaced',
-          replacement: {
-            ...apiProduct.replacement,
-            subtitle: apiProduct.replacement.category,
-          },
+          replacement: apiProduct.replacement,
         }
       : {
           ...product,

@@ -8,7 +8,7 @@ import { Product } from '../../molecules/product/product.component';
 
 export interface ProductReplaced extends Product {
   type: 'product-replaced';
-  replacement: Product;
+  replacement: Pick<Product, 'id' | 'title'>;
 }
 
 @Component({

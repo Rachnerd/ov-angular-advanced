@@ -15,6 +15,7 @@
       *ngSwitchDefault
       [product]="asProduct(product)"
       (addToCart)="addProductToCart($event, asProduct(product)!)"
+      (removeFromCart)="removeFromCart.emit($event)"
     ></ov-product-default>
   </li>
 </ul>

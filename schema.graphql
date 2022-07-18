@@ -14,6 +14,11 @@ type CartProducts {
   paginationInfo: PaginationInfo!
 }
 
+type Mutation {
+  addToCart(id: ID!, quantity: Int!): Boolean!
+  removeFromCart(id: ID!): Boolean!
+}
+
 type NotFound {
   id: ID!
   reason: String!
@@ -90,7 +95,7 @@ type Quantity {
 
 type Query {
   cart(pagination: PaginationParams): Cart!
-  product(id: ID!): ProductReplaced!
+  product(id: ID!): ProductResult!
   products(pagination: PaginationParams!): Products!
 }
 

@@ -14,7 +14,13 @@
         <p class="description">
           {{ product.description }}
         </p>
-        <ov-price [amount]="product.price"></ov-price>
+        <ov-price
+          *ngIf="product.price; else loading"
+          [amount]="product.price!"
+        ></ov-price>
+        <ng-template #loading>
+          <ov-spinner ></ov-spinner>
+        </ng-template>
       </div>
       <div>
         <ng-content select="[actions]"></ng-content>

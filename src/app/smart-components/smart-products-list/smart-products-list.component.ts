@@ -1,13 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import {
-  ProductUnionFragment,
+  AddToCartGQL,
+  CartInfoFragmentDoc,
+  PaginationParams,
   ProductsListGQL,
+  ProductsListPricesGQL,
+  ProductsListWithoutPricesDocument,
+  ProductsListWithoutPricesGQL,
+  RemoveFromCartGQL,
 } from '../../../generated/graphql';
-import {
-  AddToCartEvent,
-  ProductUnion,
-} from '../../ui-components/organisms/products-list/products-list.component';
+import { AddToCartEvent } from '../../ui-components/organisms/products-list/products-list.component';
+import { mapToProductUnion } from './mapper/product-union.mapper';
+
+const PAGINATATION: PaginationParams = {
+  page: 1,
+  size: 10,
+};
 
 @Component({
   selector: 'ov-smart-products-list',
@@ -16,46 +25,84 @@ import {
 })
 export class SmartProductsListComponent implements OnInit {
   products$ = this.productsListGql
-    .fetch({
-      page: 1,
-      size: 10,
+    .watch(PAGINATATION, {
+      fetchPolicy: 'cache-only',
     })
-    .pipe(
-      map(({ loading, data }) => ({
-        loading,
-        data: data ? data.products.results.map(mapToProductUnion) : undefined,
+    .valueChanges.pipe(
+      map(({ data }) => ({
+        loading: false,
+        data: data ? data.products?.results.map(mapToProductUnion) : undefined,
       }))
     );
 
-  constructor(private productsListGql: ProductsListGQL) {}
+  constructor(
+    private productsListGql: ProductsListGQL,
+    private productsListWithoutPricesGql: ProductsListWithoutPricesGQL,
+    private productsListPricesGql: ProductsListPricesGQL,
+    private addToCartGQL: AddToCartGQL,
+    private removeFromCartGQL: RemoveFromCartGQL
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.productsListWithoutPricesGql
+      .fetch(PAGINATATION)
+      .subscribe(() => console.log('Products are loaded'));
+    this.productsListPricesGql
+      .fetch(PAGINATATION)
+      .subscribe(() => console.log('Prices are loaded'));
+  }
 
-  addProductToCart({ product, quantity }: AddToCartEvent) {
-    console.log(`Add  ${quantity}x ${product.id} to cart`);
+  addProductToCart({ product: { id, price }, quantity }: AddToCartEvent) {
+    this.addToCartGQL
+      .mutate(
+        { id, quantity },
+        {
+          optimisticResponse: {
+            __typename: 'Mutation',
+            addToCart: true,
+          },
+          update: (proxy, _, { variables }) => {
+            const { id, quantity } = variables!;
+            proxy.writeFragment({
+              id: `ProductInStock:${id}`,
+              fragment: CartInfoFragmentDoc,
+              data: {
+                __typename: 'ProductInStock',
+                cartInfo: {
+                  id,
+                  quantity,
+                  total: price! * quantity,
+                },
+              },
+            });
+          },
+        }
+      )
+      .subscribe(() => console.log('Product is added to cart'));
+  }
+
+  removeFromCart(id: string) {
+    this.removeFromCartGQL
+      .mutate(
+        { id },
+        {
+          optimisticResponse: {
+            __typename: 'Mutation',
+            removeFromCart: true,
+          },
+          update: (proxy, _, { variables }) => {
+            const { id } = variables!;
+            proxy.writeFragment({
+              id: `ProductInStock:${id}`,
+              fragment: CartInfoFragmentDoc,
+              data: {
+                __typename: 'ProductInStock',
+                cartInfo: null,
+              },
+            });
+          },
+        }
+      )
+      .subscribe(() => console.log('Product is removed from cart'));
   }
 }
-
-const mapToProductUnion = (product: ProductUnionFragment): ProductUnion => {
-  if (product.__typename === 'ProductInStock') {
-    return {
-      type: 'product',
-      ...product,
-      subtitle: product.category,
-      isLimited: product.limited,
-      cartInfo: product.cartInfo ?? undefined,
-    };
-  } else if (product.__typename === 'ProductOutOfStock') {
-    return {
-      type: 'product-out-of-stock',
-      ...product,
-      subtitle: product.category,
-    };
-  } else {
-    return {
-      type: 'product-replaced',
-      subtitle: product.category,
-      ...product,
-    };
-  }
-};

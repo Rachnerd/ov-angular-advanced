@@ -8,7 +8,7 @@ import {
 export interface Product {
   id: string;
   title: string;
-  price: number;
+  price?: number;
   description: string;
   subtitle: string;
   image: string;

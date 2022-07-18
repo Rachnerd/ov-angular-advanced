@@ -27,6 +27,7 @@ export class ProductsListComponent implements OnInit {
   @Input() products!: ProductUnion[];
 
   @Output() addToCart = new EventEmitter<AddToCartEvent>();
+  @Output() removeFromCart = new EventEmitter<string>();
 
   productIntersectionMargin = '-200px 0px -350px 0px';
 

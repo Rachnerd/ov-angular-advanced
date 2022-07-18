@@ -3,10 +3,16 @@
   [ovResizeObserver]="breakpointConfig"
   (resize)="onResize($event)"
 >
-  <section actions>
-    <ov-message type="ok" *ngIf="product.cartInfo as cartInfo; else notInCart">
-      {{ cartInfo.quantity }}x = €{{ cartInfo.total | number: "1.2-2" }}
-    </ov-message>
+  <section actions *ngIf="product.price">
+    <div *ngIf="product.cartInfo as cartInfo; else notInCart" class="cart-info">
+      {{ cartInfo.quantity }}x
+      <ov-message type="ok">
+        €{{ cartInfo.total | number: "1.2-2" }}
+      </ov-message>
+      <ov-button (click)="removeFromCart.emit(product.id)">
+        <ov-icon icon="trash" color="white"></ov-icon>
+      </ov-button>
+    </div>
     <ng-template #notInCart>
       <p *ngIf="isLarge">Add to cart:</p>
       <ov-quantity-picker

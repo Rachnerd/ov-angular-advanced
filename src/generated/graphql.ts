@@ -34,6 +34,23 @@ export type CartProducts = {
   paginationInfo: PaginationInfo;
 };
 
+export type Mutation = {
+  __typename: 'Mutation';
+  addToCart: Scalars['Boolean'];
+  removeFromCart: Scalars['Boolean'];
+};
+
+
+export type MutationAddToCartArgs = {
+  id: Scalars['ID'];
+  quantity: Scalars['Int'];
+};
+
+
+export type MutationRemoveFromCartArgs = {
+  id: Scalars['ID'];
+};
+
 export type NotFound = {
   __typename: 'NotFound';
   id: Scalars['ID'];
@@ -118,7 +135,7 @@ export type Quantity = {
 export type Query = {
   __typename: 'Query';
   cart: Cart;
-  product: ProductReplaced;
+  product: ProductResult;
   products: Products;
 };
 
@@ -143,13 +160,39 @@ export type Rating = {
   rate: Scalars['Float'];
 };
 
-type ProductUnion_ProductInStock_Fragment = { __typename: 'ProductInStock', limited: boolean, id: string, title: string, price: number, description: string, category: string, image: string, quantity: { __typename: 'Quantity', min: number, step: number, max: number }, cartInfo?: { __typename: 'CartProduct', id: string, quantity: number, total: number } | null, rating: { __typename: 'Rating', count: number, rate: number } };
+export type AddToCartMutationVariables = Exact<{
+  id: Scalars['ID'];
+  quantity: Scalars['Int'];
+}>;
 
-type ProductUnion_ProductOutOfStock_Fragment = { __typename: 'ProductOutOfStock', id: string, title: string, price: number, description: string, category: string, image: string, rating: { __typename: 'Rating', count: number, rate: number } };
 
-type ProductUnion_ProductReplaced_Fragment = { __typename: 'ProductReplaced', id: string, title: string, price: number, description: string, category: string, image: string, replacement: { __typename: 'ProductInStock', id: string, title: string }, rating: { __typename: 'Rating', count: number, rate: number } };
+export type AddToCartMutation = { __typename: 'Mutation', addToCart: boolean };
+
+export type CartInfoFragment = { __typename: 'ProductInStock', cartInfo?: { __typename: 'CartProduct', id: string, quantity: number, total: number } | null };
+
+type ProductUnion_ProductInStock_Fragment = { __typename: 'ProductInStock', limited: boolean, id: string, title: string, description: string, category: string, image: string, quantity: { __typename: 'Quantity', min: number, step: number, max: number }, cartInfo?: { __typename: 'CartProduct', id: string, quantity: number, total: number } | null, rating: { __typename: 'Rating', count: number, rate: number } };
+
+type ProductUnion_ProductOutOfStock_Fragment = { __typename: 'ProductOutOfStock', id: string, title: string, description: string, category: string, image: string, rating: { __typename: 'Rating', count: number, rate: number } };
+
+type ProductUnion_ProductReplaced_Fragment = { __typename: 'ProductReplaced', id: string, title: string, description: string, category: string, image: string, replacement: { __typename: 'ProductInStock', id: string, title: string }, rating: { __typename: 'Rating', count: number, rate: number } };
 
 export type ProductUnionFragment = ProductUnion_ProductInStock_Fragment | ProductUnion_ProductOutOfStock_Fragment | ProductUnion_ProductReplaced_Fragment;
+
+export type ProductsListPricesQueryVariables = Exact<{
+  page: Scalars['Int'];
+  size: Scalars['Int'];
+}>;
+
+
+export type ProductsListPricesQuery = { __typename: 'Query', products: { __typename: 'Products', results: Array<{ __typename: 'ProductInStock', id: string, price: number } | { __typename: 'ProductOutOfStock', id: string, price: number } | { __typename: 'ProductReplaced', id: string, price: number }> } };
+
+export type ProductsListWithoutPricesQueryVariables = Exact<{
+  page: Scalars['Int'];
+  size: Scalars['Int'];
+}>;
+
+
+export type ProductsListWithoutPricesQuery = { __typename: 'Query', products: { __typename: 'Products', results: Array<{ __typename: 'ProductInStock', limited: boolean, id: string, title: string, description: string, category: string, image: string, quantity: { __typename: 'Quantity', min: number, step: number, max: number }, cartInfo?: { __typename: 'CartProduct', id: string, quantity: number, total: number } | null, rating: { __typename: 'Rating', count: number, rate: number } } | { __typename: 'ProductOutOfStock', id: string, title: string, description: string, category: string, image: string, rating: { __typename: 'Rating', count: number, rate: number } } | { __typename: 'ProductReplaced', id: string, title: string, description: string, category: string, image: string, replacement: { __typename: 'ProductInStock', id: string, title: string }, rating: { __typename: 'Rating', count: number, rate: number } }> } };
 
 export type ProductsListQueryVariables = Exact<{
   page: Scalars['Int'];
@@ -157,13 +200,28 @@ export type ProductsListQueryVariables = Exact<{
 }>;
 
 
-export type ProductsListQuery = { __typename: 'Query', products: { __typename: 'Products', results: Array<{ __typename: 'ProductInStock', limited: boolean, id: string, title: string, price: number, description: string, category: string, image: string, quantity: { __typename: 'Quantity', min: number, step: number, max: number }, cartInfo?: { __typename: 'CartProduct', id: string, quantity: number, total: number } | null, rating: { __typename: 'Rating', count: number, rate: number } } | { __typename: 'ProductOutOfStock', id: string, title: string, price: number, description: string, category: string, image: string, rating: { __typename: 'Rating', count: number, rate: number } } | { __typename: 'ProductReplaced', id: string, title: string, price: number, description: string, category: string, image: string, replacement: { __typename: 'ProductInStock', id: string, title: string }, rating: { __typename: 'Rating', count: number, rate: number } }> } };
+export type ProductsListQuery = { __typename: 'Query', products: { __typename: 'Products', results: Array<{ __typename: 'ProductInStock', price: number, limited: boolean, id: string, title: string, description: string, category: string, image: string, quantity: { __typename: 'Quantity', min: number, step: number, max: number }, cartInfo?: { __typename: 'CartProduct', id: string, quantity: number, total: number } | null, rating: { __typename: 'Rating', count: number, rate: number } } | { __typename: 'ProductOutOfStock', price: number, id: string, title: string, description: string, category: string, image: string, rating: { __typename: 'Rating', count: number, rate: number } } | { __typename: 'ProductReplaced', price: number, id: string, title: string, description: string, category: string, image: string, replacement: { __typename: 'ProductInStock', id: string, title: string }, rating: { __typename: 'Rating', count: number, rate: number } }> } };
 
+export type RemoveFromCartMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type RemoveFromCartMutation = { __typename: 'Mutation', removeFromCart: boolean };
+
+export const CartInfoFragmentDoc = gql`
+    fragment CartInfo on ProductInStock {
+  cartInfo {
+    id
+    quantity
+    total
+  }
+}
+    `;
 export const ProductUnionFragmentDoc = gql`
     fragment ProductUnion on Product {
   id
   title
-  price
   description
   category
   image
@@ -192,8 +250,45 @@ export const ProductUnionFragmentDoc = gql`
   }
 }
     `;
-export const ProductsListDocument = gql`
-    query ProductsList($page: Int!, $size: Int!) {
+export const AddToCartDocument = gql`
+    mutation AddToCart($id: ID!, $quantity: Int!) {
+  addToCart(id: $id, quantity: $quantity)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddToCartGQL extends Apollo.Mutation<AddToCartMutation, AddToCartMutationVariables> {
+    override document = AddToCartDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ProductsListPricesDocument = gql`
+    query ProductsListPrices($page: Int!, $size: Int!) {
+  products(pagination: {page: $page, size: $size}) {
+    results {
+      id
+      price
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ProductsListPricesGQL extends Apollo.Query<ProductsListPricesQuery, ProductsListPricesQueryVariables> {
+    override document = ProductsListPricesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ProductsListWithoutPricesDocument = gql`
+    query ProductsListWithoutPrices($page: Int!, $size: Int!) {
   products(pagination: {page: $page, size: $size}) {
     results {
       ...ProductUnion
@@ -205,8 +300,45 @@ export const ProductsListDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
+  export class ProductsListWithoutPricesGQL extends Apollo.Query<ProductsListWithoutPricesQuery, ProductsListWithoutPricesQueryVariables> {
+    override document = ProductsListWithoutPricesDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ProductsListDocument = gql`
+    query ProductsList($page: Int!, $size: Int!) {
+  products(pagination: {page: $page, size: $size}) {
+    results {
+      ...ProductUnion
+      price
+    }
+  }
+}
+    ${ProductUnionFragmentDoc}`;
+
+  @Injectable({
+    providedIn: 'root'
+  })
   export class ProductsListGQL extends Apollo.Query<ProductsListQuery, ProductsListQueryVariables> {
     override document = ProductsListDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RemoveFromCartDocument = gql`
+    mutation RemoveFromCart($id: ID!) {
+  removeFromCart(id: $id)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RemoveFromCartGQL extends Apollo.Mutation<RemoveFromCartMutation, RemoveFromCartMutationVariables> {
+    override document = RemoveFromCartDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

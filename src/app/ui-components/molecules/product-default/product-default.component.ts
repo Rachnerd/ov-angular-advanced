@@ -35,6 +35,7 @@ export class ProductDefaultComponent implements OnInit {
   @Input() product!: ProductDefault;
 
   @Output() addToCart = new EventEmitter<number>();
+  @Output() removeFromCart = new EventEmitter<string>();
 
   breakpointConfig: ProductBreakpointConfig = {
     small: 0,

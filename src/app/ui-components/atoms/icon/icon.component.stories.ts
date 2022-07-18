@@ -23,6 +23,7 @@ const ICONS: Record<SupportedIcon, true> = {
   'star-half-o': true,
   'star-o': true,
   envelope: true,
+  trash: true,
 };
 
 const Template: Story<Omit<IconComponent, 'icon'>> = (args) => ({

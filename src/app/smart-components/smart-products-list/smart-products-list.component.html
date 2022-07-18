@@ -4,6 +4,7 @@
     <ov-products-list
       [products]="state.data!"
       (addToCart)="addProductToCart($event)"
+      (removeFromCart)="removeFromCart($event)"
     ></ov-products-list>
   </ng-template>
 </ng-container>

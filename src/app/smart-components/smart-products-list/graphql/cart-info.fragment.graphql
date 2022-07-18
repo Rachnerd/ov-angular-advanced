@@ -1,0 +1,7 @@
+fragment CartInfo on ProductInStock {
+  cartInfo {
+    id
+    quantity
+    total
+  }
+}

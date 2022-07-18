@@ -11,3 +11,14 @@
     margin-right: var(--space-xs);
   }
 }
+
+.cart-info {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  ov-button {
+    width: 40px;
+  }
+}

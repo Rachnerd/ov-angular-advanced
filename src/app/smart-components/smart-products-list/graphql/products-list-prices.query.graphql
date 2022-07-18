@@ -1,0 +1,8 @@
+query ProductsListPrices($page: Int!, $size: Int!) {
+  products(pagination: { page: $page, size: $size }) {
+    results {
+      id
+      price
+    }
+  }
+}

@@ -23,7 +23,7 @@ export const ProductDefaultMock: Record<MockKeys, ProductDefault> = {
     isLimited: false,
     cartInfo: {
       quantity: 6,
-      total: ProductMock.PRIMARY.price * 6,
+      total: ProductMock.PRIMARY.price! * 6,
     },
   },
   MAX_CONTENT: {

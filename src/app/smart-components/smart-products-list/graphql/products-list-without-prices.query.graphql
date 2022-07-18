@@ -1,5 +1,3 @@
-
-
 query ProductsListWithoutPrices($page: Int!, $size: Int!) {
   products(pagination: { page: $page, size: $size }) {
     results {

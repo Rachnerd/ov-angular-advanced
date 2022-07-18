@@ -6,9 +6,8 @@ import {
   PaginationParams,
   ProductsListGQL,
   ProductsListPricesGQL,
-  ProductsListWithoutPricesDocument,
   ProductsListWithoutPricesGQL,
-  RemoveFromCartGQL,
+  RemoveFromCartGQL
 } from '../../../generated/graphql';
 import { AddToCartEvent } from '../../ui-components/organisms/products-list/products-list.component';
 import { mapToProductUnion } from './mapper/product-union.mapper';

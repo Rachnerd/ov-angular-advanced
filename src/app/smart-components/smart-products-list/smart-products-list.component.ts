@@ -47,7 +47,11 @@ export class SmartProductsListComponent implements OnInit {
       .fetch(PAGINATATION)
       .subscribe(() => console.log('Products are loaded'));
     this.productsListPricesGql
-      .fetch(PAGINATATION)
+      .fetch(PAGINATATION, {
+        context: {
+          noBatch: true,
+        },
+      })
       .subscribe(() => console.log('Prices are loaded'));
   }
 

@@ -97,12 +97,14 @@
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
           "options": {
+            "configDir": ".storybook",
             "browserTarget": "ov-angular-advanced:build",
             "styles": [".storybook/styles.scss", "src/styles.scss"],
             "port": 6006
           }
         },
         "build-storybook": {
+          "configDir": ".storybook",
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "browserTarget": "ov-angular-advanced:build"

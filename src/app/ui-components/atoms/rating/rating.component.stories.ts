@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { RatingModule } from './rating.module';
 import { RatingComponent } from './rating.component';
 
@@ -12,7 +12,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<RatingComponent> = (args) => ({
+const Template: StoryFn<RatingComponent> = (args) => ({
   props: args,
 });
 

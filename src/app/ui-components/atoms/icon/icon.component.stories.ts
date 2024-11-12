@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import {
   SupportedIcon,
   IconComponent,
@@ -25,7 +25,7 @@ const ICONS: Record<SupportedIcon, true> = {
   envelope: true,
 };
 
-const Template: Story<Omit<IconComponent, 'icon'>> = (args) => ({
+const Template: StoryFn<Omit<IconComponent, 'icon'>> = (args) => ({
   props: args,
   template: `
   <ul class="sb">
@@ -63,7 +63,7 @@ const COLORS: Record<SupportedColor, true> = {
   white: true,
 };
 
-const ColorTemplate: Story<Omit<IconComponent, 'color'>> = (args) => ({
+const ColorTemplate: StoryFn<Omit<IconComponent, 'color'>> = (args) => ({
   props: args,
   template: `
   <ul class="sb">
@@ -103,7 +103,7 @@ const SIZES: Record<SupportedSize, true> = {
   xxl: true,
 };
 
-const SizesTemplate: Story<Omit<IconComponent, 'size'>> = (args) => ({
+const SizesTemplate: StoryFn<Omit<IconComponent, 'size'>> = (args) => ({
   props: args,
   template: `
   <ul class="sb">

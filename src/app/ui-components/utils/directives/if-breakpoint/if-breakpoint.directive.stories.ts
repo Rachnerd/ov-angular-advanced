@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { BREAKPOINT_ORDER } from '../../services/breakpoint/breakpoint.service';
 import { IfBreakpointDirective } from './if-breakpoint.directive';
 import { IfBreakpointModule } from './if-breakpoint.module';
@@ -16,7 +16,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<void> = () => ({
+const Template: StoryFn = () => ({
   template: `
     <section class="sb-breakpoint-example">
       <span>Current breakpoint:</span>
@@ -30,7 +30,7 @@ const Template: Story<void> = () => ({
 
 export const Primary = Template.bind({});
 
-const RangeTemplate: Story<void> = () => ({
+const RangeTemplate: StoryFn = () => ({
   template: `
     <section class="sb-breakpoint-example">
       <ul>
@@ -50,7 +50,7 @@ const RangeTemplate: Story<void> = () => ({
 
 export const Range = RangeTemplate.bind({});
 
-const ElseTemplate: Story<void> = () => ({
+const ElseTemplate: StoryFn = () => ({
   template: `
     <section class="sb-breakpoint-example">
       <span *ovIfBreakpoint="'sm'; else other" style="color: green">We're on sm</span>
@@ -63,7 +63,7 @@ const ElseTemplate: Story<void> = () => ({
 
 export const Else = ElseTemplate.bind({});
 
-const ElseRangeTemplate: Story<void> = () => ({
+const ElseRangeTemplate: StoryFn = () => ({
   template: `
     <section class="sb-breakpoint-example">
       <span *ovIfBreakpoint="'sm'; to 'md'; else other" style="color: green">We're on sm to md</span>

@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 
 import { PriceComponent } from './price.component';
 import { PriceModule } from './price.module';
@@ -13,7 +13,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<PriceComponent> = (args) => ({
+const Template: StoryFn<PriceComponent> = (args) => ({
   props: args,
 });
 

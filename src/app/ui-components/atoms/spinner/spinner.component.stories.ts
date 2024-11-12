@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { SpinnerComponent } from './spinner.component';
 import { SpinnerModule } from './spinner.module';
 
@@ -12,7 +12,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<SpinnerComponent> = (args) => ({
+const Template: StoryFn<SpinnerComponent> = (args) => ({
   props: args,
 });
 

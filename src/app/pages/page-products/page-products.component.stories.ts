@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProductDefaultMock } from '../../ui-components/molecules/product-default/product-default.component.mocks';
 import { ProductOutOfStockMock } from '../../ui-components/molecules/product-out-of-stock/product-out-of-stock.component.mocks';
 import { ProductReplacementMock } from '../../ui-components/molecules/product-replaced/product-replaced.component.mocks';
@@ -26,7 +26,7 @@ const products = [
   ProductDefaultMock.MAX_CONTENT,
 ];
 
-const Template: Story<PageProductsComponent> = (args) => ({
+const Template: StoryFn<PageProductsComponent> = (args) => ({
   props: args,
 });
 

@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProductReplacedComponent } from './product-replaced.component';
 import { ProductReplacementMock } from './product-replaced.component.mocks';
 import { ProductReplacedModule } from './product-replaced.module';
@@ -13,7 +13,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<ProductReplacedComponent> = (args) => ({
+const Template: StoryFn<ProductReplacedComponent> = (args) => ({
   props: args,
 });
 

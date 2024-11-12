@@ -1,3 +1,4 @@
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { delay, of } from 'rxjs';
 import { ProductService } from '../../services/product/product.service';
@@ -37,7 +38,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<PageProductsComponent> = (args) => ({
+const Template: StoryFn<PageProductsComponent> = (args) => ({
   props: args,
 });
 

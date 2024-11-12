@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { MessageComponent, MessageType } from './message.component';
 import { MessageModule } from './message.module';
 
@@ -18,7 +18,7 @@ const TYPES: Record<MessageType, true> = {
   error: true,
 };
 
-const Template: Story<MessageComponent> = (args) => ({
+const Template: StoryFn<MessageComponent> = (args) => ({
   props: args,
   template: `
   <ul class="sb">

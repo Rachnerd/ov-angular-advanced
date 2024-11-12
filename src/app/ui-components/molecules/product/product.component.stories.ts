@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProductComponent } from './product.component';
 import { ProductMock } from './product.component.mocks';
 import { ProductModule } from './product.module';
@@ -13,7 +13,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<ProductComponent> = (args) => ({
+const Template: StoryFn<ProductComponent> = (args) => ({
   props: args,
   template: `
   <ov-product [product]="product">

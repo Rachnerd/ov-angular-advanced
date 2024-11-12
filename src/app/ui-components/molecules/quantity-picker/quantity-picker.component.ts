@@ -8,7 +8,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { QuantityValidator } from './shared/quantity.validator';
 
 export interface Quantity {
@@ -45,10 +45,10 @@ export class QuantityPickerComponent implements OnInit {
     }
   }
 
-  quantityFormControl!: FormControl;
+  quantityFormControl!: UntypedFormControl;
 
   ngOnInit(): void {
-    this.quantityFormControl = new FormControl(this.quantity.min, [
+    this.quantityFormControl = new UntypedFormControl(this.quantity.min, [
       Validators.required,
       /**
        * Custom validator to check if the quantity meets the step requirement.

@@ -5,24 +5,18 @@
     [ovIntersectionObserver]="productIntersectionMargin"
     (intersect)="productIntersect($event)"
   >
-    <ng-container *ngSwitchCase="'product-out-of-stock'">
-      <ov-product-out-of-stock
-        *ngIf="asProductOutOfStock(product)! as product"
-        [product]="product"
-      ></ov-product-out-of-stock>
-    </ng-container>
-    <ng-container *ngSwitchCase="'product-replaced'">
-      <ov-product-replaced
-        *ngIf="asProductReplaced(product)! as product"
-        [product]="product"
-      ></ov-product-replaced>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
-      <ov-product-default
-        *ngIf="asProduct(product)! as product"
-        [product]="product"
-        (addToCart)="addProductToCart($event, product)"
-      ></ov-product-default>
-    </ng-container>
+    <ov-product-out-of-stock
+      *ngSwitchCase="'product-out-of-stock'"
+      [product]="asProductOutOfStock(product)"
+    ></ov-product-out-of-stock>
+    <ov-product-replaced
+      *ngSwitchCase="'product-replaced'"
+      [product]="asProductReplaced(product)"
+    ></ov-product-replaced>
+    <ov-product-default
+      *ngSwitchDefault
+      [product]="asProduct(product)"
+      (addToCart)="addProductToCart($event, asProduct(product)!)"
+    ></ov-product-default>
   </li>
 </ul>

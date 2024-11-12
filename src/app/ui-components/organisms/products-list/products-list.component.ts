@@ -32,16 +32,20 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  asProduct(product: ProductUnion): ProductDefault | undefined {
-    return product.type === 'product' ? product : undefined;
+  /**
+   * These helper methods help Angular's template compiler since it does not support
+   * a switch case in combination with string literals.
+   */
+  asProduct(product: ProductUnion): ProductDefault {
+    return product as ProductDefault;
   }
 
-  asProductOutOfStock(product: ProductUnion): ProductOutOfStock | undefined {
-    return product.type === 'product-out-of-stock' ? product : undefined;
+  asProductOutOfStock(product: ProductUnion): ProductOutOfStock {
+    return product as ProductOutOfStock;
   }
 
-  asProductReplaced(product: ProductUnion): ProductReplaced | undefined {
-    return product.type === 'product-replaced' ? product : undefined;
+  asProductReplaced(product: ProductUnion): ProductReplaced {
+    return product as ProductReplaced;
   }
 
   addProductToCart(quantity: number, product: ProductDefault) {

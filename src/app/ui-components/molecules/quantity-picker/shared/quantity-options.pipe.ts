@@ -17,7 +17,7 @@ export class QuantityOptionsPipe implements PipeTransform {
         break;
       }
     }
-    if (options[options.length - 1] < max) {
+    if ((options[options.length - 1] as number) < max) {
       options.push('More');
     }
     return options;

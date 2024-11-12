@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { TemplateDefaultComponent } from './template-default.component';
 import { TemplateDefaultModule } from './template-default.module';
 
@@ -15,7 +15,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<TemplateDefaultComponent> = (args) => ({
+const Template: StoryFn<TemplateDefaultComponent> = (args) => ({
   props: args,
   template: `
     <ov-template-default>
@@ -30,7 +30,7 @@ const Template: Story<TemplateDefaultComponent> = (args) => ({
 
 export const Primary = Template.bind({});
 
-const TemplateComplete: Story<TemplateDefaultComponent> = (args) => ({
+const TemplateComplete: StoryFn<TemplateDefaultComponent> = (args) => ({
   props: args,
   template: `
     <ov-template-default>

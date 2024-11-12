@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 
 import { ThumbnailComponent } from './thumbnail.component';
 import { ThumbnailModule } from './thumbnail.module';
@@ -13,7 +13,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<ThumbnailComponent> = (args) => ({
+const Template: StoryFn<ThumbnailComponent> = (args) => ({
   props: args,
 });
 

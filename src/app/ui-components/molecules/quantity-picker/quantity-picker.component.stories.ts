@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { QuantityPickerComponent } from './quantity-picker.component';
 import { QuantityPickerMocks } from './quantity-picker.component.mocks';
 import { QuantityPickerModule } from './quantity-picker.module';
@@ -13,7 +13,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<QuantityPickerComponent> = (args) => ({
+const Template: StoryFn<QuantityPickerComponent> = (args) => ({
   props: args,
 });
 

@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ResizeObserverDirective } from './resize-observer.directive';
 import { ResizeObserverModule } from './resize-observer.module';
 
@@ -15,7 +15,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<void> = () => ({
+const Template: StoryFn = () => ({
   template: `
     <section class="sb-resize-observer-example">
       <section [ovResizeObserver]="{ small: 0, large: 460 }" (resize)="isLarge1 = $event === 'large'" [class.isLarge]="isLarge1">
@@ -26,7 +26,7 @@ const Template: Story<void> = () => ({
 
 export const Primary = Template.bind({});
 
-const SideBySideTemplate: Story<void> = () => ({
+const SideBySideTemplate: StoryFn = () => ({
   template: `
     <section class="sb-resize-observer-example">
       <section [ovResizeObserver]="{ small: 0, large: 460 }" (resize)="isLarge1 = $event === 'large'" [class.isLarge]="isLarge1">

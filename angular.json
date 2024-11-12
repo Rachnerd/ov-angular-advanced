@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ov-angular-advanced:build:production"
+              "buildTarget": "ov-angular-advanced:build:production"
             },
             "development": {
-              "browserTarget": "ov-angular-advanced:build:development"
+              "buildTarget": "ov-angular-advanced:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ov-angular-advanced:build"
+            "buildTarget": "ov-angular-advanced:build"
           }
         },
         "test": {
@@ -97,12 +97,14 @@
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
           "options": {
+            "configDir": ".storybook",
             "browserTarget": "ov-angular-advanced:build",
             "styles": [".storybook/styles.scss", "src/styles.scss"],
             "port": 6006
           }
         },
         "build-storybook": {
+          "configDir": ".storybook",
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "browserTarget": "ov-angular-advanced:build"
@@ -110,6 +112,5 @@
         }
       }
     }
-  },
-  "defaultProject": "ov-angular-advanced"
+  }
 }

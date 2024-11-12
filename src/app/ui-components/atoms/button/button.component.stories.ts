@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ButtonComponent, SupportedType } from './button.component';
 import { ButtonModule } from './button.module';
 
@@ -17,7 +17,7 @@ const TYPES: Record<SupportedType, true> = {
   inverted: true,
 };
 
-const Template: Story<ButtonComponent> = (args) => ({
+const Template: StoryFn<ButtonComponent> = (args) => ({
   props: args,
   template: `
   <ul>
@@ -35,7 +35,7 @@ const Template: Story<ButtonComponent> = (args) => ({
 export const Primary = Template.bind({});
 Primary.args = {};
 
-const DisabledTemplate: Story<ButtonComponent> = (args) => ({
+const DisabledTemplate: StoryFn<ButtonComponent> = (args) => ({
   props: args,
   template: `
   <ul>

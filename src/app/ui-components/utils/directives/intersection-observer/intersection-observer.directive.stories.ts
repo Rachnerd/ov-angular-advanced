@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { IntersectionObserverDirective } from './intersection-observer.directive';
 import { IntersectionObserverModule } from './intersection-observer.module';
 
@@ -15,7 +15,7 @@ export default {
   },
 } as Meta;
 
-const PercentagesTemplate: Story<void> = () => ({
+const PercentagesTemplate: StoryFn = () => ({
   template: `
     <ul class="sb-intersection-observer-example" #list>
       <h1>Margin: '-30% 0px -40% 0px</h1>
@@ -31,7 +31,7 @@ const PercentagesTemplate: Story<void> = () => ({
 
 export const Percentages = PercentagesTemplate.bind({});
 
-const PixelsTemplate: Story<void> = () => ({
+const PixelsTemplate: StoryFn = () => ({
   template: `
     <ul class="sb-intersection-observer-example" #list>
       <h1>Margin: '-250px 0px -400px 0px'</h1>

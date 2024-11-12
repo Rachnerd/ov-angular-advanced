@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { delay, of } from 'rxjs';
 import { ProductService } from '../../state/product/product.service';
 import { ProductDefaultMock } from '../../ui-components/molecules/product-default/product-default.component.mocks';
@@ -37,7 +37,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<PageProductsComponent> = (args) => ({
+const Template: StoryFn<PageProductsComponent> = (args) => ({
   props: args,
 });
 
